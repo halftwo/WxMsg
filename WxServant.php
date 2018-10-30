@@ -75,7 +75,7 @@ class WxServant extends \xic_Servant
 			$xml = simplexml_load_string($plain);
 			$msg = xml2array($xml);
 		}
-		dlog(xic_self_id(), "RECV", json_encode($msg));
+		dlog("", "RECV", json_encode($msg));
 
 		$msgType = $msg["MsgType"];
 
@@ -123,7 +123,7 @@ class WxServant extends \xic_Servant
 			"Content"=>$text,
 			"CreateTime"=>time(),
 		);
-		dlog(xic_self_id(), "SEND", json_encode($reply));
+		dlog("", "SEND", json_encode($reply));
 
 		if ($encrypt_type == 'aes')
 		{

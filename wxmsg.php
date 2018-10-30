@@ -38,7 +38,7 @@ function main()
 
 	if ($signature == '' || $nonce == '' || $timestamp == '')
 	{
-		dlog(xic_self_id(), "AUTH", "NO_PARAMS");
+		dlog("", "AUTH", "NO_PARAMS");
 		print "invalid request\n";
 		exit();
 	}
@@ -46,7 +46,7 @@ function main()
 	$diff = intval($timestamp) - time();
 	if ($diff < -30 || $diff > 30)
 	{
-		dlog(xic_self_id(), "AUTH", "INVALID_TIMESTAMP");
+		dlog("", "AUTH", "INVALID_TIMESTAMP");
 		print "invalid timestamp\n";
 		exit();
 	}
@@ -56,7 +56,7 @@ function main()
 	$answer = $lcache->invoke("get_and_set", array('key'=>$tnkey, 'value'=>1, 'expire'=>60));
 	if ($answer['value'] != NULL)
 	{
-		dlog(xic_self_id(), "AUTH", "REPLAY_ATTACK");
+		dlog("" "AUTH", "REPLAY_ATTACK");
 		print "replay attack?\n";
 		exit();
 	}
@@ -64,7 +64,7 @@ function main()
 	$echostr = @$_GET['echostr'];
 	if ($echostr != "")
 	{
-		dlog(xic_self_id(), "CONF", "SETUP");
+		dlog("", "CONF", "SETUP");
 		print $echostr;
 		exit();
 	}
@@ -75,7 +75,7 @@ function main()
 	$input_bytes = stream_get_contents($input_fp);
 	fclose($input_fp);
 
-	dlog(xic_self_id(), "MSG", $input_bytes);
+	dlog("", "MSG", $input_bytes);
 	$xml = simplexml_load_string($input_bytes);
 	if ($xml === FALSE)
 	{
@@ -88,7 +88,7 @@ function main()
 	$answer = $prx->invoke("msg", array("auth"=>$_GET, "msg"=>$msg));
 
 	$output_bytes = array2xml($answer['msg']);
-	dlog(xic_self_id(), "OUT", $output_bytes);
+	dlog("", "OUT", $output_bytes);
 	print $output_bytes;
 }
 
@@ -99,7 +99,7 @@ try
 }
 catch (Throwable $ex)
 {
-	dlog(xic_self_id(), "EXCEPTION", $ex);
+	dlog("", "EXCEPTION", $ex);
 	print "exception occurs\n";
 }
 
