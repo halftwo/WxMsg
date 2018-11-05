@@ -53,7 +53,7 @@ function main()
 
 	$lcache = xic_createProxy("LCache");
 	$tnkey = $timestamp . '+' . $nonce . '+' . $signature;
-	$answer = $lcache->invoke("get_and_set", array('key'=>$tnkey, 'value'=>1, 'expire'=>60));
+	$answer = $lcache->invoke("get_and_set", array('key'=>$tnkey, 'value'=>1, 'maxage'=>60));
 	if ($answer['value'] != NULL)
 	{
 		dlog("", "AUTH", "REPLAY_ATTACK");
